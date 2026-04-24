@@ -36,18 +36,9 @@ This is a **simulation**, not a full enterprise deployment:
 
 ---
 
-## Architecture Flow
+## Architecture
 
-
-On-Prem (Simulated - EC2 MySQL)
-│
-│ (Full Load + CDC via DMS)
-▼
-AWS DMS Replication Instance
-│
-▼
-Amazon RDS (MySQL - Private Subnet)
-
+![Architecture](docs/diagram/sim_mig.png)
 
 ---
 
