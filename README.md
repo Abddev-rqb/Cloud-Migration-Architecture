@@ -1,11 +1,11 @@
-# 🚀 Simulated Cloud Migration (AWS + Terraform)
+# Simulated Cloud Migration (AWS + Terraform)
 
-## 📌 Overview
+## Overview
 This project implements an end-to-end migration from a simulated on-prem environment to AWS using Terraform. It demonstrates rehost (EC2) and replatform (RDS) strategies, with real-time data replication via AWS DMS (full load + CDC) to achieve near-zero downtime.
 
 ---
 
-## 🧠 What This Project Gets Right
+## What This Project Gets Right
 
 - **End-to-End Migration Flow**: Source (EC2 MySQL) → DMS → Target (RDS)
 - **Near-Zero Downtime**: Implemented CDC using MySQL binlog + DMS
@@ -23,20 +23,20 @@ This project implements an end-to-end migration from a simulated on-prem environ
 
 ---
 
-## ⚠️ Known Limitations (Intentional Trade-offs)
+## Known Limitations (Intentional Trade-offs)
 
 This is a **simulation**, not a full enterprise deployment:
 
-- ❌ No real Site-to-Site VPN (on-prem simulated via EC2)
-- ❌ No secrets management (credentials hardcoded for simplicity)
-- ❌ No CI/CD pipeline for Terraform
-- ❌ No auto-scaling or load balancing
-- ❌ No alerting (CloudWatch alarms not configured)
-- ❌ No encryption policies (KMS not enforced)
+- No real Site-to-Site VPN (on-prem simulated via EC2)
+- No secrets management (credentials hardcoded for simplicity)
+- No CI/CD pipeline for Terraform
+- No auto-scaling or load balancing
+- No alerting (CloudWatch alarms not configured)
+- No encryption policies (KMS not enforced)
 
 ---
 
-## 🏗️ Architecture Flow
+## Architecture Flow
 
 
 On-Prem (Simulated - EC2 MySQL)
@@ -51,7 +51,7 @@ Amazon RDS (MySQL - Private Subnet)
 
 ---
 
-## 🔍 Key Engineering Decisions
+## Key Engineering Decisions
 
 - **Simulated Hybrid Setup**  
   Avoided real VPN to reduce setup complexity and focus on migration logic.
@@ -67,7 +67,7 @@ Amazon RDS (MySQL - Private Subnet)
 
 ---
 
-## 📦 Tech Stack
+## Tech Stack
 
 - AWS: EC2, RDS, DMS, S3, CloudWatch, CloudTrail
 - Terraform (modular IaC)
@@ -75,7 +75,7 @@ Amazon RDS (MySQL - Private Subnet)
 
 ---
 
-## ✅ Outcome
+## Outcome
 
 - Successfully migrated structured data using DMS (full load + CDC)
 - Verified live replication from source to target
@@ -84,7 +84,7 @@ Amazon RDS (MySQL - Private Subnet)
 
 ---
 
-## 🚀 Future Improvements
+## Future Improvements
 
 - Integrate AWS Secrets Manager for credential handling
 - Add CloudWatch alarms + dashboards
