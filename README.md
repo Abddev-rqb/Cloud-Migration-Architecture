@@ -1,23 +1,47 @@
-# Simulated Cloud Migration (AWS + Terraform)
+# 🚀 Simulated Cloud Migration (AWS + Terraform)
 
-## Description
-This project demonstrates an end-to-end migration from on-premise to AWS using Terraform. It implements rehost (EC2) and replatform (RDS) strategies with real-time data replication using AWS DMS (full load + CDC).
-
----
-
-## Tech Stack
-- AWS (EC2, RDS, DMS, S3, CloudWatch, CloudTrail)
-- Terraform
-- MySQL (Docker)
+## 📌 Overview
+This project implements an end-to-end migration from a simulated on-prem environment to AWS using Terraform. It demonstrates rehost (EC2) and replatform (RDS) strategies, with real-time data replication via AWS DMS (full load + CDC) to achieve near-zero downtime.
 
 ---
 
-## Architecture Flow
+## 🧠 What This Project Gets Right
+
+- **End-to-End Migration Flow**: Source (EC2 MySQL) → DMS → Target (RDS)
+- **Near-Zero Downtime**: Implemented CDC using MySQL binlog + DMS
+- **Production-Aligned Networking**:
+  - VPC with public/private subnets across AZs
+  - RDS isolated in private subnet
+- **Modular Terraform Design**:
+  - Clear separation of network, compute, database, DMS, storage, monitoring
+- **Security Awareness**:
+  - SG-based access control (no public DB exposure)
+  - IAM role for DMS VPC integration
+- **Audit & Observability**:
+  - CloudTrail → S3 for API auditing
+  - CloudWatch for operational visibility
+
+---
+
+## ⚠️ Known Limitations (Intentional Trade-offs)
+
+This is a **simulation**, not a full enterprise deployment:
+
+- ❌ No real Site-to-Site VPN (on-prem simulated via EC2)
+- ❌ No secrets management (credentials hardcoded for simplicity)
+- ❌ No CI/CD pipeline for Terraform
+- ❌ No auto-scaling or load balancing
+- ❌ No alerting (CloudWatch alarms not configured)
+- ❌ No encryption policies (KMS not enforced)
+
+---
+
+## 🏗️ Architecture Flow
 
 
 On-Prem (Simulated - EC2 MySQL)
 │
-│ (CDC via AWS DMS)
+│ (Full Load + CDC via DMS)
 ▼
 AWS DMS Replication Instance
 │
@@ -27,73 +51,43 @@ Amazon RDS (MySQL - Private Subnet)
 
 ---
 
-## Components
+## 🔍 Key Engineering Decisions
 
-### 1. On-Prem Simulation
-- EC2 instance running MySQL in Docker
-- Binary logging enabled for CDC
+- **Simulated Hybrid Setup**  
+  Avoided real VPN to reduce setup complexity and focus on migration logic.
 
-### 2. Networking
-- Custom VPC
-- Public + Private subnets across multiple AZs
-- Internet Gateway + routing
+- **Private RDS Deployment**  
+  Enforced internal-only access to reflect real production security patterns.
 
-### 3. Compute (Rehost)
-- EC2 instance representing application layer
+- **Binlog-Based CDC**  
+  Explicitly enabled MySQL binlog (`ROW` format + `server-id`) to support continuous replication.
 
-### 4. Database (Replatform)
-- Amazon RDS MySQL in private subnet
-- Secure access via security groups
-
-### 5. Data Migration
-- AWS DMS with:
-  - Full Load
-  - Change Data Capture (CDC)
-- Near-zero downtime migration
-
-### 6. Security
-- Least-privilege security groups
-- IAM role for DMS VPC access
-
-### 7. Observability & Audit
-- CloudWatch (log groups)
-- CloudTrail (API audit logs)
-- S3 (centralized log storage)
+- **Module Isolation**  
+  Separated storage and monitoring to avoid tightly coupled infrastructure.
 
 ---
 
-## Key Design Decisions
+## 📦 Tech Stack
 
-- Hybrid architecture simulated within VPC (no real VPN)
-- Private RDS (not publicly accessible)
-- Modular Terraform structure for scalability
-- Separation of storage and monitoring concerns
-
----
-
-## Terraform Modules
-
-- network
-- security
-- compute
-- database
-- dms
-- storage
-- monitoring
+- AWS: EC2, RDS, DMS, S3, CloudWatch, CloudTrail
+- Terraform (modular IaC)
+- MySQL (Docker-based source DB)
 
 ---
 
-## Outcome
+## ✅ Outcome
 
-- Successfully migrated data from source (EC2 MySQL) to target (RDS)
-- Verified replication using CDC
-- Implemented secure, observable, and modular cloud architecture
+- Successfully migrated structured data using DMS (full load + CDC)
+- Verified live replication from source to target
+- Built a modular, reproducible cloud migration environment
+- Demonstrated practical understanding of migration constraints and trade-offs
 
 ---
 
-## Future Improvements
+## 🚀 Future Improvements
 
-- Add CloudWatch alarms & dashboards
-- Implement CI/CD pipeline for Terraform
-- Add multi-region failover
-- Replace simulation with real hybrid VPN
+- Integrate AWS Secrets Manager for credential handling
+- Add CloudWatch alarms + dashboards
+- Implement CI/CD pipeline for Terraform (GitHub Actions)
+- Introduce multi-AZ / failover strategy
+- Replace simulated on-prem with real hybrid (VPN/Direct Connect)
